@@ -1,0 +1,15 @@
+{
+  "name": "Procrastinator",
+  "description": "Aplicaçao que mede a procrastinaçao do usuario.",
+  "manifest_version" : 2,
+  "version" : "0.1.0",
+  "background" : {
+    "scripts" : [
+      "app.js"
+    ]
+  },
+  "permissions" : [
+     "notifications",
+     "tabs"
+  ]
+}

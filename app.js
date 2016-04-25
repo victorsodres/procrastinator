@@ -6,12 +6,12 @@
   // doNotify();
 // });
 
-var timer = 0;
+let timer = 0;
+let times = 0;
 
 document.addEventListener('DOMContentLoaded', function(){
   var that = this;
   chrome.tabs.query({ active: true }, function(tab) {
-    console.log(tab);
   });
 
   chrome.tabs.onHighlighted.addListener((tab) => {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 function doNotify(tab) {
-  if(!RegExp('facebook').test(tab.url)) return;
+  if(!isTabOnBlacklist(tab)) return;
 
 	var path = chrome.runtime.getURL("images/middle-finger.png");
 	var options = null;
@@ -33,7 +33,7 @@ function doNotify(tab) {
 	options = 	{
   		type : "progress",
   		title: "Procrastinator",
-  		message: "Saia DO FACEBOOK CARALHO",
+  		message: `Você ja entrou no facebook ${++times} vezes caralho, sai daqui mano, não tem mais o que fazer?`,
   		progress: timer
 	};
 
@@ -58,5 +58,26 @@ function creationCallback(notID) {
 	setTimeout(function() {
 		chrome.notifications.clear(notID, function(wasCleared) {});
         timer = 0;
-	}, 3000);
+	}, 5000);
+}
+
+function isTabOnBlacklist(tab) {
+  let onBlacklist = RegExp('facebook').test(tab.url);
+  if (!onBlacklist) return false;
+  let logs = [];
+  let log = {
+    site: tab.url,
+    datetime: (new Date().getTime())
+  };
+
+  chrome.storage.sync.get('logs', (obj) => {
+    if(obj.logs != null && obj.logs.length > 0)
+      logs = obj.logs;
+    logs.push(log);
+    chrome.storage.sync.set({ logs: logs }, () => {
+      console.log('Log salvo');
+    });
+  });
+  
+  return onBlacklist;
 }

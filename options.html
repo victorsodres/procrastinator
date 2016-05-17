@@ -6,8 +6,19 @@
       body: { padding: 10px; }
     </style>
   </head>
-
   <body>
+
+    <div>
+      <h2>Lista Negra</h2>
+      <ul id="blacklist">
+        <li>
+          <input type="text" name="site" placeholder="URL do site..."/>
+          <label for="tempo-disponivel">Tempo por dia:</label>
+          <input type="number" style="width: 20%" name="tempo-disponivel"/>
+        </li>
+      </ul>
+      <button id="adicionar-lista">+</button>
+    </div>
 
     <div id='logs'>
     </div>

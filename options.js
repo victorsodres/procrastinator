@@ -20,9 +20,14 @@ function save_options() {
 function restore_options() {
   // Use default value color = 'red' and likesColor = true.
   chrome.storage.sync.get('logs', function(items) {
-//document.getElementById('logs') = items.likesColor;
+    //document.getElementById('logs') = items.likesColor;
   });
 }
 document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click',
-    save_options);
+//document.getElementById('save').addEventListener('click', save_options);
+
+document.getElementById('adicionar-lista').addEventListener('click', function(){
+  let list = document.getElementById('blacklist');
+  let li = list.children[0].cloneNode(true);
+  list.appendChild(li);
+});
